@@ -1,0 +1,29 @@
+# Composer
+vendor/
+composer.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache/
+
+# PHAR build artefact
+lphenom-cache.phar
+
+# KPHP vendor-src (prepared by `make kphp-check`)
+build/vendor-src/
+
+# KPHP compiled output
+kphp-out/
+
+# Temp / OS
+.DS_Store
+Thumbs.db
+*.log
+/tmp/
+
