@@ -59,7 +59,7 @@ final class KeyNormalizer
 
         // Truncate to max length (bytes)
         if (strlen($key) > self::MAX_KEY_LENGTH) {
-            $key = substr($key, 0, self::MAX_KEY_LENGTH);
+            $key = (string) substr($key, 0, self::MAX_KEY_LENGTH);
         }
 
         // After all transformations, key could theoretically be empty if it was only forbidden chars

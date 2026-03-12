@@ -66,7 +66,7 @@ final class FileCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('FileCache: failed to write key "' . $key . '".', 0, $exception);
+            throw new CacheException('FileCache: failed to write key "' . $key . '".', 0);
         }
     }
     public function delete(string $key): void
@@ -82,7 +82,7 @@ final class FileCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('FileCache: failed to delete key "' . $key . '".', 0, $exception);
+            throw new CacheException('FileCache: failed to delete key "' . $key . '".', 0);
         }
     }
     public function has(string $key): bool
@@ -131,7 +131,7 @@ final class FileCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('FileCache: failed to increment key "' . $key . '".', 0, $exception);
+            throw new CacheException('FileCache: failed to increment key "' . $key . '".', 0);
         }
         return $newValue;
     }

@@ -59,7 +59,7 @@ final class DbCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('DbCache: failed to get key "' . $key . '".', 0, $exception);
+            throw new CacheException('DbCache: failed to get key "' . $key . '".', 0);
         }
         if ($result === null) {
             return null;
@@ -98,7 +98,7 @@ final class DbCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('DbCache: failed to set key "' . $key . '".', 0, $exception);
+            throw new CacheException('DbCache: failed to set key "' . $key . '".', 0);
         }
     }
     public function delete(string $key): void
@@ -130,7 +130,7 @@ final class DbCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('DbCache: failed to increment key "' . $key . '".', 0, $exception);
+            throw new CacheException('DbCache: failed to increment key "' . $key . '".', 0);
         }
         if ($affected > 0) {
             // Row was updated — fetch new value
@@ -156,7 +156,10 @@ final class DbCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('DbCache: failed to insert during increment for key "' . $key . '".', 0, $exception);
+            throw new CacheException(
+                'DbCache: failed to insert during increment for key "' . $key . '".',
+                0
+            );
         }
         return $by;
     }
@@ -175,7 +178,7 @@ final class DbCache implements CacheInterface
             $exception = $e;
         }
         if ($exception !== null) {
-            throw new CacheException('DbCache: failed to delete key.', 0, $exception);
+            throw new CacheException('DbCache: failed to delete key.', 0);
         }
     }
 }

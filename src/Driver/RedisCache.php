@@ -58,7 +58,7 @@ final class RedisCache implements CacheInterface
         }
 
         if ($exception !== null) {
-            throw new CacheException('RedisCache: failed to get key "' . $key . '".', 0, $exception);
+            throw new CacheException('RedisCache: failed to get key "' . $key . '".', 0);
         }
 
         return $value;
@@ -76,7 +76,7 @@ final class RedisCache implements CacheInterface
         }
 
         if ($exception !== null) {
-            throw new CacheException('RedisCache: failed to set key "' . $key . '".', 0, $exception);
+            throw new CacheException('RedisCache: failed to set key "' . $key . '".', 0);
         }
     }
 
@@ -92,7 +92,7 @@ final class RedisCache implements CacheInterface
         }
 
         if ($exception !== null) {
-            throw new CacheException('RedisCache: failed to delete key "' . $key . '".', 0, $exception);
+            throw new CacheException('RedisCache: failed to delete key "' . $key . '".', 0);
         }
     }
 
@@ -109,7 +109,7 @@ final class RedisCache implements CacheInterface
         }
 
         if ($exception !== null) {
-            throw new CacheException('RedisCache: failed to check key "' . $key . '".', 0, $exception);
+            throw new CacheException('RedisCache: failed to check key "' . $key . '".', 0);
         }
 
         return $exists;
@@ -136,7 +136,7 @@ final class RedisCache implements CacheInterface
             }
 
             if ($exception !== null) {
-                throw new CacheException('RedisCache: failed to increment key "' . $key . '".', 0, $exception);
+                throw new CacheException('RedisCache: failed to increment key "' . $key . '".', 0);
             }
 
             return $newValue;
@@ -156,7 +156,7 @@ final class RedisCache implements CacheInterface
             }
 
             if ($exception !== null) {
-                throw new CacheException('RedisCache: failed to increment key "' . $key . '".', 0, $exception);
+                throw new CacheException('RedisCache: failed to increment key "' . $key . '".', 0);
             }
 
             return $newValue;
@@ -173,7 +173,7 @@ final class RedisCache implements CacheInterface
         }
 
         if ($exception !== null) {
-            throw new CacheException('RedisCache: failed to increment key "' . $key . '".', 0, $exception);
+            throw new CacheException('RedisCache: failed to increment key "' . $key . '".', 0);
         }
 
         return $newValue;
