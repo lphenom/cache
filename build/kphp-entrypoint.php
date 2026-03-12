@@ -17,9 +17,12 @@
 declare(strict_types=1);
 
 // ─── lphenom/storage ─────────────────────────────────────────────────────────
+require_once __DIR__ . '/../vendor/lphenom/storage/src/StorageException.php';
 require_once __DIR__ . '/../vendor/lphenom/storage/src/StorageInterface.php';
 
 // ─── lphenom/db ──────────────────────────────────────────────────────────────
+// lphenom/db ^0.3 is natively KPHP-compatible: Param uses string $value
+// (no int|string|bool|float|null union type), so no KPHP stubs are required.
 require_once __DIR__ . '/../vendor/lphenom/db/src/Contract/ResultInterface.php';
 require_once __DIR__ . '/../vendor/lphenom/db/src/Contract/TransactionCallbackInterface.php';
 require_once __DIR__ . '/../vendor/lphenom/db/src/Contract/ConnectionInterface.php';
