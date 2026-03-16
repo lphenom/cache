@@ -10,12 +10,12 @@ composer require lphenom/cache
 
 ## Доступные драйверы
 
-| Драйвер      | Класс           | Требует                  |
-|--------------|-----------------|--------------------------|
-| Файловый     | `FileCache`     | `lphenom/storage`        |
-| База данных  | `DbCache`       | `lphenom/db` (MySQL)     |
-| В памяти     | `InMemoryCache` | —                        |
-| Redis        | `RedisCache`    | `lphenom/redis`          |
+| Драйвер      | Класс           | Требует                        |
+|--------------|-----------------|--------------------------------|
+| Файловый     | `FileCache`     | `lphenom/storage ^0.1`         |
+| База данных  | `DbCache`       | `lphenom/db ^0.1` (MySQL)      |
+| В памяти     | `InMemoryCache` | —                              |
+| Redis        | `RedisCache`    | `lphenom/redis ^0.1`           |
 
 ## Быстрый старт
 

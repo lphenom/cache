@@ -4,6 +4,12 @@
 
 Хранит записи кэша в виде текстовых файлов через `lphenom/storage`.
 
+**Требует:** `lphenom/storage ^0.1`
+
+```bash
+composer require lphenom/storage:^0.1
+```
+
 ```php
 use LPhenom\Cache\Driver\FileCache;
 use LPhenom\Storage\LocalFilesystemStorage;
@@ -28,6 +34,12 @@ $cache   = new FileCache($storage);
 ## DbCache
 
 Хранит записи кэша в таблице MySQL через `lphenom/db`.
+
+**Требует:** `lphenom/db ^0.1`
+
+```bash
+composer require lphenom/db:^0.1
+```
 
 ### Создание таблицы
 
@@ -75,6 +87,12 @@ $cache = new InMemoryCache();
 ## RedisCache
 
 Хранит значения в Redis через `lphenom/redis`.
+
+**Требует:** `lphenom/redis ^0.1`
+
+```bash
+composer require lphenom/redis:^0.1
+```
 
 ### RespRedisClient (рекомендуется, совместим с KPHP)
 
