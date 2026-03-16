@@ -4,26 +4,26 @@
 [![PHP](https://img.shields.io/badge/PHP-8.1--8.3-blue)](https://www.php.net)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**LPhenom Cache** — KPHP-compatible caching library with file, in-memory, DB and Redis drivers.
+**LPhenom Cache** — KPHP-совместимая библиотека кэширования с файловым, in-memory, DB и Redis драйверами.
 
-Part of the [LPhenom](https://github.com/lphenom) ecosystem — a PHP framework that runs both as a classic PHP application and as a KPHP-compiled binary.
+Часть экосистемы [LPhenom](https://github.com/lphenom) — PHP-фреймворка, работающего как в классическом PHP-режиме, так и в виде KPHP-скомпилированного бинарника.
 
-## Drivers
+## Драйверы
 
-| Driver | Class | Backend |
-|--------|-------|---------|
-| File-based | `FileCache` | Filesystem via `lphenom/storage` |
-| Database | `DbCache` | MySQL via `lphenom/db` |
-| In-memory | `InMemoryCache` | PHP array (process lifetime) |
-| Redis | `RedisCache` | Redis via `lphenom/redis` |
+| Драйвер      | Класс           | Бэкенд                               |
+|--------------|-----------------|--------------------------------------|
+| Файловый     | `FileCache`     | Файловая система через `lphenom/storage` |
+| База данных  | `DbCache`       | MySQL через `lphenom/db`             |
+| В памяти     | `InMemoryCache` | PHP-массив (время жизни процесса)    |
+| Redis        | `RedisCache`    | Redis через `lphenom/redis`          |
 
-## Installation
+## Установка
 
 ```bash
 composer require lphenom/cache
 ```
 
-## Quick Start
+## Быстрый старт
 
 ```php
 use LPhenom\Cache\Driver\InMemoryCache;
@@ -33,17 +33,17 @@ use LPhenom\Storage\LocalFilesystemStorage;
 use LPhenom\Redis\Connection\RedisConnectionConfig;
 use LPhenom\Redis\Connection\RedisConnector;
 
-// In-memory (testing / KPHP process)
+// In-memory (тестирование / KPHP-процесс)
 $cache = new InMemoryCache();
 
-// File-based
+// Файловый
 $cache = new FileCache(new LocalFilesystemStorage('/var/cache/app'));
 
-// Redis (pure PHP RESP — KPHP-compatible)
+// Redis (чистый PHP RESP — совместим с KPHP)
 $config = new RedisConnectionConfig('127.0.0.1', 6379);
 $cache  = new RedisCache(RedisConnector::connectResp($config));
 
-// Use any driver via the same interface
+// Любой драйвер через единый интерфейс
 $cache->set('user:42', json_encode($user), 3600);
 $data  = $cache->get('user:42');   // ?string
 $exist = $cache->has('user:42');   // bool
@@ -51,7 +51,7 @@ $hits  = $cache->increment('page:hits', 1, 86400);
 $cache->delete('user:42');
 ```
 
-## Interface
+## Интерфейс
 
 ```php
 interface CacheInterface {
@@ -63,26 +63,26 @@ interface CacheInterface {
 }
 ```
 
-TTL `0` means no expiry. All keys are normalized via `KeyNormalizer` (forbidden chars replaced, max 64 bytes).
+TTL `0` означает бессрочное хранение. Все ключи нормализуются через `KeyNormalizer` (запрещённые символы заменяются, максимум 64 байта).
 
-## Development
+## Разработка
 
 ```bash
-make up              # start MySQL + Redis via docker-compose
-make install         # composer install inside the container
-make test            # run all tests (unit + integration)
-make test-unit       # unit tests only (no Docker services)
-make lint            # PSR-12 check
-make analyse         # PHPStan level 8
-make kphp-check      # KPHP binary + PHAR build verification
-make down            # stop services
+make up              # запустить MySQL + Redis через docker-compose
+make install         # composer install внутри контейнера
+make test            # запустить все тесты (unit + integration)
+make test-unit       # только юнит-тесты (без Docker-сервисов)
+make lint            # проверка PSR-12
+make analyse         # PHPStan уровень 8
+make kphp-check      # проверка KPHP binary + PHAR
+make down            # остановить сервисы
 ```
 
-## Documentation
+## Документация
 
-- [Drivers](docs/drivers.md)
-- [KPHP Compatibility](docs/kphp-compatibility.md)
+- [Драйверы](docs/drivers.md)
+- [Совместимость с KPHP](docs/kphp-compatibility.md)
 
-## License
+## Лицензия
 
-MIT — see [LICENSE](LICENSE).
+MIT — см. [LICENSE](LICENSE).

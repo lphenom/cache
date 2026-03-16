@@ -1,8 +1,8 @@
-# Cache Drivers
+# Драйверы кэша
 
 ## FileCache
 
-Stores cache entries as plain text files via `lphenom/storage`.
+Хранит записи кэша в виде текстовых файлов через `lphenom/storage`.
 
 ```php
 use LPhenom\Cache\Driver\FileCache;
@@ -12,24 +12,24 @@ $storage = new LocalFilesystemStorage('/var/cache/app');
 $cache   = new FileCache($storage);
 ```
 
-**File format:**
+**Формат файла:**
 ```
-{expires_unix_timestamp}\n{value}
+{unix_timestamp_истечения}\n{значение}
 ```
-`0` in the first line means no expiry.
+`0` в первой строке означает отсутствие срока жизни.
 
-**Characteristics:**
-- Works on shared hosting (no extensions required)
-- Atomic writes (temp file + rename)
-- Lazy expiry on `get()`
+**Характеристики:**
+- Работает на shared hosting (расширения не требуются)
+- Атомарная запись (временный файл + rename)
+- Ленивое истечение при `get()`
 
 ---
 
 ## DbCache
 
-Stores cache entries in a MySQL table via `lphenom/db`.
+Хранит записи кэша в таблице MySQL через `lphenom/db`.
 
-### Table setup
+### Создание таблицы
 
 ```sql
 CREATE TABLE IF NOT EXISTS `cache` (
@@ -48,16 +48,16 @@ $connection = new PdoMySqlConnection($dsn, 'user', 'pass');
 $cache      = new DbCache($connection);
 ```
 
-**Characteristics:**
-- Uses `REPLACE INTO` for atomic upsert
-- Lazy expiry on `get()`
-- `increment()` uses atomic SQL `UPDATE ... SET value = CAST(CAST(value AS SIGNED) + :by)`
+**Характеристики:**
+- Использует `REPLACE INTO` для атомарного upsert
+- Ленивое истечение при `get()`
+- `increment()` использует атомарный SQL: `UPDATE ... SET value = CAST(CAST(value AS SIGNED) + :by)`
 
 ---
 
 ## InMemoryCache
 
-Stores values in a PHP array — data is lost when the process exits.
+Хранит значения в PHP-массиве — данные теряются при завершении процесса.
 
 ```php
 use LPhenom\Cache\Driver\InMemoryCache;
@@ -65,20 +65,20 @@ use LPhenom\Cache\Driver\InMemoryCache;
 $cache = new InMemoryCache();
 ```
 
-**Use cases:**
-- Unit testing (no I/O)
-- KPHP compiled long-lived server processes
-- Request-level caching
+**Варианты использования:**
+- Юнит-тестирование (без I/O)
+- Долгоживущие KPHP-серверные процессы
+- Кэширование на уровне запроса
 
 ---
 
 ## RedisCache
 
-Stores values in Redis via `lphenom/redis`.
+Хранит значения в Redis через `lphenom/redis`.
 
-### RespRedisClient (recommended, KPHP-compatible)
+### RespRedisClient (рекомендуется, совместим с KPHP)
 
-Uses pure PHP RESP protocol — no `ext-redis` required.
+Использует чистый PHP RESP-протокол — `ext-redis` не требуется.
 
 ```php
 use LPhenom\Cache\Driver\RedisCache;
@@ -90,29 +90,29 @@ $client = RedisConnector::connectResp($config);
 $cache  = new RedisCache($client);
 ```
 
-### PhpRedisClient (PHP-only, requires ext-redis)
+### PhpRedisClient (только PHP, требует ext-redis)
 
 ```php
 $client = RedisConnector::connectPhpRedis($config);
 $cache  = new RedisCache($client);
 ```
 
-**TTL:**  passed directly to Redis `SET key value EX ttl`.
+**TTL:** передаётся напрямую в Redis-команду `SET key value EX ttl`.
 
 **`increment()`:**
-- `by = 1` → atomic `INCR` command
-- `by > 1` → `GET` + `SET` (not atomic under high concurrency)
+- `by = 1` → атомарная команда `INCR`
+- `by > 1` → `GET` + `SET` (не атомарно при высокой конкурентности)
 
 ---
 
-## Key Normalization
+## Нормализация ключей
 
-All keys pass through `KeyNormalizer::normalize()`:
+Все ключи проходят через `KeyNormalizer::normalize()`:
 
-- Trims whitespace
-- Replaces `{ } ( ) / \ @ : space .` with `_`
-- Truncates to 64 bytes
-- Throws `CacheException` if result is empty
+- Обрезает пробелы
+- Заменяет `{ } ( ) / \ @ : пробел .` на `_`
+- Усекает до 64 байт
+- Бросает `CacheException` если результат пустой
 
 ```php
 use LPhenom\Cache\KeyNormalizer;
@@ -120,4 +120,3 @@ use LPhenom\Cache\KeyNormalizer;
 KeyNormalizer::normalize('user:42:name');  // → 'user_42_name'
 KeyNormalizer::normalize('  hello  ');     // → 'hello'
 ```
-

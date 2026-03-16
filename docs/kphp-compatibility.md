@@ -1,67 +1,66 @@
-# KPHP Compatibility — lphenom/cache
+# Совместимость с KPHP — lphenom/cache
 
-All cache drivers are designed for KPHP-compiled mode.
+Все драйверы кэша разработаны для работы в режиме KPHP-компиляции.
 
-## Compliant patterns used
+## Применяемые паттерны совместимости
 
-| Pattern | Status |
+| Паттерн | Статус |
 |---------|--------|
-| `declare(strict_types=1)` in every file | ✅ |
-| No constructor property promotion | ✅ |
-| No `readonly` properties | ✅ |
-| No `Reflection` API | ✅ |
-| No `eval()` or `$$var` | ✅ |
-| No `callable` in arrays | ✅ |
-| `try/catch` with explicit `catch (\Throwable $e)` | ✅ |
-| `strpos()` / `substr()` instead of `str_contains` etc. | ✅ |
-| `array<K, V>` PHPDoc on all arrays | ✅ |
-| No `match` expressions | ✅ |
-| Explicit `new ClassName()` (not dynamic) | ✅ |
+| `declare(strict_types=1)` во всех файлах | ✅ |
+| Без constructor property promotion | ✅ |
+| Без `readonly` свойств | ✅ |
+| Без `Reflection` API | ✅ |
+| Без `eval()` и `$$var` | ✅ |
+| Без `callable` в массивах | ✅ |
+| `try/catch` с явным `catch (\Throwable $e)` | ✅ |
+| `strpos()` / `substr()` вместо `str_contains` и т.д. | ✅ |
+| `array<K, V>` PHPDoc на всех массивах | ✅ |
+| Без выражений `match` | ✅ |
+| Явный `new ClassName()` (не динамический) | ✅ |
 
-## KPHP-incompatible fixes applied
+## Исправленные KPHP-несовместимости
 
-### Constructor property promotion removed
+### Удалён constructor property promotion
 
 ```php
-// ❌ Old (not KPHP compatible)
+// ❌ Старый вариант (не совместим с KPHP)
 public function __construct(private StorageInterface $storage) {}
 
-// ✅ Fixed
+// ✅ Исправлено
 private StorageInterface $storage;
 public function __construct(StorageInterface $storage) {
     $this->storage = $storage;
 }
 ```
 
-Same fix applied to `DbCache` and `RedisCache`.
+Аналогичное исправление применено к `DbCache` и `RedisCache`.
 
-## KPHP entrypoint
+## Точка входа KPHP
 
-For KPHP compilation see `build/kphp-entrypoint.php`.
+Для KPHP-компиляции используется `build/kphp-entrypoint.php`.
 
-Run `make kphp-check` to verify KPHP compilation:
+Запустите `make kphp-check` для проверки KPHP-компиляции:
 
 ```bash
 make kphp-check
 ```
 
-This:
-1. Copies dependency sources into `build/vendor-src/`
-2. Runs `docker build -f Dockerfile.check` (two stages: KPHP binary + PHAR)
-3. Executes the compiled binary to verify it runs correctly
+Это:
+1. Копирует исходники зависимостей в `build/vendor-src/`
+2. Запускает `docker build -f Dockerfile.check` (два этапа: KPHP binary + PHAR)
+3. Выполняет скомпилированный бинарник для проверки корректности
 
-## Driver availability in each mode
+## Доступность драйверов в каждом режиме
 
-| Driver | PHP shared hosting | KPHP compiled |
-|--------|-------------------|---------------|
+| Драйвер | PHP shared hosting | KPHP compiled |
+|---------|--------------------|---------------|
 | `InMemoryCache` | ✅ | ✅ |
-| `FileCache` | ✅ | ✅ (via lphenom/storage) |
-| `DbCache` | ✅ (PDO) | ✅ (via lphenom/db FfiMySql) |
-| `RedisCache` + `RespRedisClient` | ✅ (pure PHP) | ✅ |
+| `FileCache` | ✅ | ✅ (через lphenom/storage) |
+| `DbCache` | ✅ (PDO) | ✅ (через lphenom/db FfiMySql) |
+| `RedisCache` + `RespRedisClient` | ✅ (чистый PHP) | ✅ |
 | `RedisCache` + `PhpRedisClient` | ✅ (ext-redis) | ❌ |
 
-## References
+## Ссылки
 
-- [KPHP vs PHP differences](https://vkcom.github.io/kphp/kphp-language/kphp-vs-php/whats-the-difference.html)
-- [vkcom/kphp Docker image](https://hub.docker.com/r/vkcom/kphp)
-
+- [Различия KPHP vs PHP](https://vkcom.github.io/kphp/kphp-language/kphp-vs-php/whats-the-difference.html)
+- [Docker-образ vkcom/kphp](https://hub.docker.com/r/vkcom/kphp)

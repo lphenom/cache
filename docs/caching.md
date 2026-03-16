@@ -1,23 +1,23 @@
 # LPhenom Cache
 
-`lphenom/cache` — KPHP-compatible caching library for the LPhenom framework.
+`lphenom/cache` — KPHP-совместимая библиотека кэширования для фреймворка LPhenom.
 
-## Installation
+## Установка
 
 ```bash
 composer require lphenom/cache
 ```
 
-## Available Drivers
+## Доступные драйверы
 
-| Driver | Class | Requires |
-|--------|-------|----------|
-| File-based | `FileCache` | `lphenom/storage` |
-| Database | `DbCache` | `lphenom/db` (MySQL) |
-| In-memory | `InMemoryCache` | — |
-| Redis | `RedisCache` | `lphenom/redis` |
+| Драйвер      | Класс           | Требует                  |
+|--------------|-----------------|--------------------------|
+| Файловый     | `FileCache`     | `lphenom/storage`        |
+| База данных  | `DbCache`       | `lphenom/db` (MySQL)     |
+| В памяти     | `InMemoryCache` | —                        |
+| Redis        | `RedisCache`    | `lphenom/redis`          |
 
-## Quick Start
+## Быстрый старт
 
 ```php
 use LPhenom\Cache\Driver\InMemoryCache;
@@ -35,7 +35,7 @@ if ($cache->has('user:42')) {
 $hits = $cache->increment('page:hits', 1, 86400);
 ```
 
-## Interface
+## Интерфейс
 
 ```php
 interface CacheInterface {
@@ -47,26 +47,25 @@ interface CacheInterface {
 }
 ```
 
-> TTL `0` = store forever. All keys are normalized by `KeyNormalizer`.
+> TTL `0` = хранить вечно. Все ключи нормализуются через `KeyNormalizer`.
 
-## Documentation
+## Документация
 
-- [Drivers](./drivers.md) — driver setup and configuration
-- [KPHP Compatibility](./kphp-compatibility.md) — KPHP-specific notes
+- [Драйверы](./drivers.md) — настройка и конфигурация драйверов
+- [Совместимость с KPHP](./kphp-compatibility.md) — особенности KPHP
 
-## Development
+## Разработка
 
 ```bash
-make up              # start MySQL + Redis
-make test            # run all tests
-make test-unit       # unit tests only (no services)
-make test-integration # integration tests
-make lint            # PSR-12 check
-make analyse         # PHPStan level 8
-make kphp-check      # KPHP binary + PHAR check
+make up              # запустить MySQL + Redis
+make test            # запустить все тесты
+make test-unit       # только юнит-тесты (без сервисов)
+make test-integration # интеграционные тесты
+make lint            # проверка PSR-12
+make analyse         # PHPStan уровень 8
+make kphp-check      # проверка KPHP binary + PHAR
 ```
 
-## License
+## Лицензия
 
-MIT — see [LICENSE](../LICENSE).
-
+MIT — см. [LICENSE](../LICENSE).
